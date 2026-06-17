@@ -1,70 +1,91 @@
-# Getting Started with Create React App
+# 🎓 Student Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack Student Management System built with React, Node.js, Express, and PostgreSQL.
 
-## Available Scripts
+## 🧰 Tech Stack
+- **Frontend:** React, Axios, React Router DOM, React Hot Toast
+- **Backend:** Node.js, Express.js
+- **Database:** PostgreSQL
 
-In the project directory, you can run:
+## ✨ Features
+- Add / Edit / Delete students
+- Auto-generated Admission Numbers (ADM-YEAR-XXXX)
+- Photo upload
+- Search, Filter & Pagination
+- Activity Logging
+- Responsive UI
 
-### `npm start`
+## 📡 API Endpoints
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /students | Fetch all students |
+| GET | /students/:id | Fetch single student |
+| POST | /students | Add new student |
+| PUT | /students/:id | Update student |
+| DELETE | /students/:id | Delete student |
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## ⚙️ Setup Instructions
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Prerequisites
+- Node.js
+- PostgreSQL
+- Git
 
-### `npm test`
+### Backend Setup
+```bash
+cd backend
+npm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Create a `.env` file in the `backend` folder:
+```env
+PORT=5000
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=your_password
+DB_NAME=student_management
+```
 
-### `npm run build`
+```bash
+npm run dev
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Database Setup
+Run these SQL commands in PostgreSQL:
+```sql
+CREATE DATABASE student_management;
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+CREATE TABLE students (
+  id               SERIAL PRIMARY KEY,
+  admission_number VARCHAR(30) UNIQUE NOT NULL,
+  name             VARCHAR(100) NOT NULL,
+  course           VARCHAR(100) NOT NULL,
+  year             INTEGER NOT NULL CHECK (year BETWEEN 1 AND 6),
+  date_of_birth    DATE NOT NULL,
+  email            VARCHAR(150) UNIQUE NOT NULL,
+  mobile_number    VARCHAR(15) NOT NULL,
+  gender           VARCHAR(10) CHECK (gender IN ('Male', 'Female', 'Other')) NOT NULL,
+  address          TEXT NOT NULL,
+  photo_url        VARCHAR(255),
+  created_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+CREATE TABLE activity_logs (
+  id          SERIAL PRIMARY KEY,
+  action      VARCHAR(50) NOT NULL,
+  student_id  INTEGER,
+  description TEXT,
+  created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
 
-### `npm run eject`
+### Frontend Setup
+```bash
+cd frontend
+npm install
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Open [http://localhost:3000](http://localhost:3000)

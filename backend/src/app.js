@@ -11,7 +11,7 @@ app.use(helmet({
 }));
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://*.vercel.app'],
+  origin: ['http://localhost:3000', 'https://student-management-system-umber-seven.vercel.app'],
   credentials: true
 }));
 app.use(morgan('dev'));

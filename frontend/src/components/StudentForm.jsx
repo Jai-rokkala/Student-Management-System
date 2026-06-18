@@ -18,29 +18,29 @@ const inputStyle = (err) => ({
 
 export default function StudentForm({ onSubmit, initial = {}, loading }) {
   const [form, setForm] = useState({
-    name:          initial.name          || '',
-    course:        initial.course        || '',
-    year:          initial.year          || '',
+    name: initial.name || '',
+    course: initial.course || '',
+    year: initial.year || '',
     date_of_birth: initial.date_of_birth ? initial.date_of_birth.split('T')[0] : '',
-    email:         initial.email         || '',
+    email: initial.email || '',
     mobile_number: initial.mobile_number || '',
-    gender:        initial.gender        || '',
-    address:       initial.address       || '',
+    gender: initial.gender || '',
+    address: initial.address || '',
   });
-  const [photo, setPhoto]     = useState(null);
+  const [photo, setPhoto] = useState(null);
   const [preview, setPreview] = useState(initial.photo_url || null);
-  const [errors, setErrors]   = useState({});
+  const [errors, setErrors] = useState({});
 
   const validate = () => {
     const e = {};
-    if (!form.name.trim())                          e.name          = 'Name is required';
-    if (!form.course)                               e.course        = 'Course is required';
-    if (!form.year || form.year < 1 || form.year > 6) e.year        = 'Year must be 1–6';
-    if (!form.date_of_birth)                        e.date_of_birth = 'DOB is required';
-    if (!/^\S+@\S+\.\S+$/.test(form.email))        e.email         = 'Valid email required';
-    if (!/^\d{10}$/.test(form.mobile_number))       e.mobile_number = '10-digit mobile required';
-    if (!form.gender)                               e.gender        = 'Gender is required';
-    if (!form.address.trim())                       e.address       = 'Address is required';
+    if (!form.name.trim()) e.name = 'Name is required';
+    if (!form.course) e.course = 'Course is required';
+    if (!form.year || form.year < 1 || form.year > 6) e.year = 'Year must be 1–6';
+    if (!form.date_of_birth) e.date_of_birth = 'DOB is required';
+    if (!/^\S+@\S+\.\S+$/.test(form.email)) e.email = 'Valid email required';
+    if (!/^\d{10}$/.test(form.mobile_number)) e.mobile_number = '10-digit mobile required';
+    if (!form.gender) e.gender = 'Gender is required';
+    if (!form.address.trim()) e.address = 'Address is required';
     return e;
   };
 
@@ -70,8 +70,7 @@ export default function StudentForm({ onSubmit, initial = {}, loading }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '18px' }}>
-
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '18px' }}>
         {/* Photo Upload */}
         <div style={{ gridColumn: '1 / -1', display: 'flex', alignItems: 'center', gap: '20px' }}>
           {preview && (

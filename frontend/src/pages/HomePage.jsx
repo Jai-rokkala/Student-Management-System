@@ -4,12 +4,12 @@ import toast from 'react-hot-toast';
 import { getStudents, deleteStudent } from '../api/studentApi';
 
 export default function HomePage() {
-  const [students, setStudents]   = useState([]);
-  const [total, setTotal]         = useState(0);
-  const [page, setPage]           = useState(1);
-  const [search, setSearch]       = useState('');
-  const [course, setCourse]       = useState('');
-  const [loading, setLoading]     = useState(false);
+  const [students, setStudents] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState('');
+  const [course, setCourse] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const LIMIT = 8;
 
@@ -47,10 +47,14 @@ export default function HomePage() {
       padding: '10px 16px', borderRadius: '8px', border: '1.5px solid #d1d5db',
       fontSize: '14px', outline: 'none', flex: 1, minWidth: '180px'
     },
-    table: { width: '100%', borderCollapse: 'collapse', background: '#fff',
-      borderRadius: '12px', overflow: 'hidden', boxShadow: '0 4px 20px rgba(0,0,0,0.07)' },
-    th: { background: '#4f46e5', color: '#fff', padding: '14px 16px',
-      textAlign: 'left', fontSize: '13px', fontWeight: '600' },
+    table: {
+      width: '100%', borderCollapse: 'collapse', background: '#fff',
+      borderRadius: '12px', overflow: 'hidden', boxShadow: '0 4px 20px rgba(0,0,0,0.07)'
+    },
+    th: {
+      background: '#4f46e5', color: '#fff', padding: '14px 16px',
+      textAlign: 'left', fontSize: '13px', fontWeight: '600'
+    },
     td: { padding: '12px 16px', borderBottom: '1px solid #f3f4f6', fontSize: '14px' },
     avatar: { width: '38px', height: '38px', borderRadius: '50%', objectFit: 'cover' },
     avatarPlaceholder: {
@@ -115,7 +119,7 @@ export default function HomePage() {
         <select style={{ ...s.input, flex: 'none', width: '160px' }}
           value={course} onChange={e => { setCourse(e.target.value); setPage(1); }}>
           <option value="">All Courses</option>
-          {['B.Tech','BCA','MCA','MBA','B.Sc','M.Sc','B.Com','M.Tech'].map(c =>
+          {['B.Tech', 'BCA', 'MCA', 'MBA', 'B.Sc', 'M.Sc', 'B.Com', 'M.Tech'].map(c =>
             <option key={c}>{c}</option>)}
         </select>
       </div>
@@ -132,7 +136,7 @@ export default function HomePage() {
         <table style={s.table}>
           <thead>
             <tr>
-              {['Photo','Adm. No','Name','Course','Year','Email','Mobile','Gender','Actions'].map(h =>
+              {['Photo', 'Adm. No', 'Name', 'Course', 'Year', 'Email', 'Mobile', 'Gender', 'Actions'].map(h =>
                 <th key={h} style={s.th}>{h}</th>)}
             </tr>
           </thead>
@@ -141,8 +145,19 @@ export default function HomePage() {
               <tr key={st.id} style={{ background: i % 2 === 0 ? '#fff' : '#fafafa' }}>
                 <td style={s.td}>
                   {st.photo_url
-                    ? <img src={`http://localhost:5000${st.photo_url}`} alt="" style={s.avatar} />
-                    : <div style={s.avatarPlaceholder}>{st.name[0]}</div>}
+                    ? <img
+                      src={`https://student-management-system-production-5527.up.railway.app${st.photo_url}`}
+                      alt=""
+                      style={s.avatar}
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                    : null}
+                  <div style={{ ...s.avatarPlaceholder, display: st.photo_url ? 'none' : 'flex' }}>
+                    {st.name[0]}
+                  </div>
                 </td>
                 <td style={s.td}><code style={{ color: '#4f46e5', fontSize: '12px' }}>{st.admission_number}</code></td>
                 <td style={{ ...s.td, fontWeight: '600' }}>{st.name}</td>
@@ -153,7 +168,7 @@ export default function HomePage() {
                 <td style={s.td}><span style={s.badge(st.gender)}>{st.gender}</span></td>
                 <td style={s.td}>
                   <button style={s.editBtn} onClick={() => navigate(`/edit/${st.id}`)}>✏️ Edit</button>
-                  <button style={s.delBtn}  onClick={() => handleDelete(st.id, st.name)}>🗑️ Del</button>
+                  <button style={s.delBtn} onClick={() => handleDelete(st.id, st.name)}>🗑️ Del</button>
                 </td>
               </tr>
             ))}
@@ -166,7 +181,7 @@ export default function HomePage() {
         <div style={s.pagination}>
           <button style={s.pageBtn(false)} onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}>← Prev</button>
           {Array.from({ length: totalPages }, (_, i) => (
-            <button key={i+1} style={s.pageBtn(page === i+1)} onClick={() => setPage(i+1)}>{i+1}</button>
+            <button key={i + 1} style={s.pageBtn(page === i + 1)} onClick={() => setPage(i + 1)}>{i + 1}</button>
           ))}
           <button style={s.pageBtn(false)} onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}>Next →</button>
         </div>

@@ -6,12 +6,14 @@ const path    = require('path');
 
 const app = express();
 
-// ✅ Helmet with cross-origin image policy disabled
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' }
 }));
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://*.vercel.app'],
+  credentials: true
+}));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

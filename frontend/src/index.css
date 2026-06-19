@@ -10,11 +10,17 @@ body {
 ::-webkit-scrollbar-track { background: #f1f1f1; }
 ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 10px; }
 
-/* Responsive layout */
 .desktop-table { display: block; overflow-x: auto; }
-.mobile-cards  { display: none; }
+.mobile-cards  { display: none !important; }
 
 @media (max-width: 768px) {
-  .desktop-table { display: none; }
-  .mobile-cards  { display: block; }
+  .desktop-table { display: none !important; }
+  .mobile-cards  { display: block !important; }
+
+  nav {
+    flex-wrap: wrap;
+    height: auto !important;
+    padding: 12px 16px !important;
+    gap: 8px;
+  }
 }
